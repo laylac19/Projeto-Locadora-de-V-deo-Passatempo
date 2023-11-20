@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
 import {ItemModel} from "../../model/item.model";
-import {ItemListModel} from "../../model/item-list.model";
+import {ItemListModel} from "../../model/list/item-list.model";
 import {SelectItem} from "primeng/api";
 
 @Injectable({
@@ -24,8 +24,16 @@ export class ItemService {
         return this.http.get<ItemModel>(this.resourceUrl + '/' + id);
     }
 
-    fillItenDropdown(): Observable<SelectItem[]>{
+    fillTypeCategoryItenDropdown(): Observable<SelectItem[]> {
         return this.http.get<SelectItem[]>(this.resourceUrl + '/dropdown-tipo-item')
+    }
+
+    fillAvailableItensDropdown(): Observable<SelectItem[]>{
+        return this.http.get<SelectItem[]>(this.resourceUrl + '/dropdown')
+    }
+
+    valueOfItemLease(id: number): Observable<number[]>{
+        return this.http.get<number[]>(this.resourceUrl + '/valorItem' + '/' + id)
     }
 
     insert(entity: ItemModel): Observable<ItemModel> {

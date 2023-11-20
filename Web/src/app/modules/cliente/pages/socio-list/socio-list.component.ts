@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ColunaModel} from "../../../../model/util/coluna.model";
+import {ColunaModel} from "../../../../shared/util/coluna.model";
 import {ClienteService} from "../../../../shared/service/cliente.service";
-import {ConfirmationService} from "primeng/api";
-import {TituloModalEnum} from "../../../../model/util/titulo-modal-enum.model";
+import {TituloModalEnum} from "../../../../shared/util/titulo-modal-enum.model";
 import {EntidadeUtil} from "../../../../shared/util/entidade-util";
-import {SocioListModel} from "../../../../model/socio-list.model";
+import {SocioListModel} from "../../../../model/list/socio-list.model";
 import {SocioModel} from "../../../../model/socio.model";
 import {SocioFormComponent} from "../socio-form/socio-form.component";
+import {MensagensConfirmacao} from "../../../../shared/util/msgConfirmacaoDialog.util";
 
 @Component({
     selector: 'app-socio-list',
@@ -29,7 +29,7 @@ export class SocioListComponent implements OnInit {
 
     constructor(
         private clienteService: ClienteService,
-        private confirmMessage: ConfirmationService
+        private confirmMessage: MensagensConfirmacao
     ) {
     }
 
@@ -42,7 +42,7 @@ export class SocioListComponent implements OnInit {
         this.colunas = [
             new ColunaModel('numeroInscricao', 'Nº Inscrição'),
             new ColunaModel('nome', 'Nome Cliente'),
-            new ColunaModel('dtNascimento', 'Data Nascimento'),
+            new ColunaModel('dataNascimento', 'Data Nascimento'),
             new ColunaModel('cpf', 'CPF'),
             new ColunaModel('telefone', 'Telefone'),
             new ColunaModel('acoes', 'Ações', '132px')
@@ -95,17 +95,7 @@ export class SocioListComponent implements OnInit {
     }
 
     public confirmarAcao(id: number): void {
-        this.confirmarDialog(id, () => this.desativarSocio(id), EntidadeUtil.CLIENTE);
-    }
-
-    public confirmarDialog(id: number, alterarSituacao: () => void, entidade: EntidadeUtil): void {
-        this.confirmMessage.confirm({
-            header: 'Confirmação',
-            message: 'Deseja desativar esse(a) ' + entidade.descricao + ' ?',
-            acceptLabel: 'Sim',
-            rejectLabel: 'Cancelar',
-            accept: alterarSituacao
-        });
+        this.confirmMessage.confirmarDialog(id, () => this.desativarSocio(id), EntidadeUtil.CLIENTE);
     }
 
     public resetarForm(): void {
@@ -117,5 +107,9 @@ export class SocioListComponent implements OnInit {
             this.listarSociosAtivos();
         }
         this.display = false;
+    }
+
+    rativarSocio($event: number) {
+
     }
 }

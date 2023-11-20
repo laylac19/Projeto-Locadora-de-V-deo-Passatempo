@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AtendimentoClienteEnum} from "../../model/util/atendimento-cliente-enum";
-import {ControleAcervoEnumModel} from "../../model/util/controle-acervo-enum.model";
+import {AtendimentoClienteEnum} from "../../shared/util/atendimento-cliente-enum";
+import {ControleAcervoEnumModel} from "../../shared/util/controle-acervo-enum.model";
 
 @Component({
     selector: 'app-menu-atendimento-cliente',

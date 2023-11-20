@@ -5,8 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
-
-    <changeSet id="1666696114876-1" author="layla">
+    <changeSet id="1667854550545-1" author="layla">
         <createSequence incrementBy="50" sequenceName="seq_cliente" startValue="1"/>
         <createTable tableName="socio">
             <column name="id" type="INT">

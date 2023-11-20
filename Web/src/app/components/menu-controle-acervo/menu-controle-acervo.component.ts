@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {ControleAcervoEnumModel} from "../../model/util/controle-acervo-enum.model";
+import {ControleAcervoEnumModel} from "../../shared/util/controle-acervo-enum.model";
 
 @Component({
     selector: 'app-menu-controle-acervo',

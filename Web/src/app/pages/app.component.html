@@ -3,14 +3,15 @@
     <div class="corpo-aplicacao">
         <app-sidemenu [configuracaoMenuLateral]="configuracaoMenuLateral"></app-sidemenu>
         <div class="conteudo-principal">
-            <span *ngIf="casoUso === 'Controle'">
-                <app-controle-acervo></app-controle-acervo>
-            </span>
-            <span *ngIf="casoUso === 'Atendimento'">
-                <app-menu-atendimento-cliente></app-menu-atendimento-cliente>
-            </span>
-            <router-outlet></router-outlet>
+            <div class="container list col-12">
+                <p-card class="list-card col-10">
+                    <router-outlet></router-outlet>
+                </p-card>
+            </div>
         </div>
     </div>
 </div>
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
+<!--body > app-root > div > div > div > div > p-card-->

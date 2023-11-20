@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="202211151843" author="layla">
+        <insert tableName="classe">
+            <column name="id_classe" valueNumeric="1"/>
+            <column name="nome_classe" value="Lançamento"/>
+            <column name="valor" value="60.99"/>
+            <column name="prado_devolucao" value="3"/>
+            <column name="ativo" value="true"/>
+        </insert>
+        <insert tableName="classe">
+            <column name="id_classe" valueNumeric="2"/>
+            <column name="nome_classe" value="Diamante"/>
+            <column name="valor" value="55.45"/>
+            <column name="prado_devolucao" value="4"/>
+            <column name="ativo" value="true"/>
+        </insert>
+        <insert tableName="classe">
+            <column name="id_classe" valueNumeric="3"/>
+            <column name="nome_classe" value="Ouro"/>
+            <column name="valor" value="48.97"/>
+            <column name="prado_devolucao" value="5"/>
+            <column name="ativo" value="true"/>
+        </insert>
+        <insert tableName="classe">
+            <column name="id_classe" valueNumeric="4"/>
+            <column name="nome_classe" value="Prata"/>
+            <column name="valor" value="28.30"/>
+            <column name="prado_devolucao" value="7"/>
+            <column name="ativo" value="true"/>
+        </insert>
+        <insert tableName="classe">
+            <column name="id_classe" valueNumeric="5"/>
+            <column name="nome_classe" value="Bronze"/>
+            <column name="valor" value="15.55"/>
+            <column name="prado_devolucao" value="11"/>
+            <column name="ativo" value="true"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

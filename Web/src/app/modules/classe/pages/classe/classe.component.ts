@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ClasseModel} from "../../../../model/classe.model";
 import {ClasseService} from "../../../../shared/service/classe.service";
+import {MensagensProntasEnumModel} from "../../../../shared/util/mensagensProntasEnum.model";
+import {MensagensUtil} from "../../../../shared/util/mensagens-util";
 
 @Component({
     selector: 'app-classe',
@@ -21,6 +23,7 @@ export class ClasseComponent implements OnInit {
     constructor(
         private builder: FormBuilder,
         private service: ClasseService,
+        private message: MensagensUtil
     ) {
     }
 
@@ -41,11 +44,15 @@ export class ClasseComponent implements OnInit {
         this.novaClasse = this.formClasse.getRawValue();
         this.service.insert(this.novaClasse).subscribe({
             next: () => {
+                if(this.novaClasse.id) {
+                    this.message.mensagemSucesso(MensagensProntasEnumModel.ATUALIZAR_CLASSE.descricao);
+                } else {
+                    this.message.mensagemSucesso(MensagensProntasEnumModel.CADASTRO_CLASSE.descricao);}
                 this.fecharForm();
                 this.listarClasses = true;
             },
-            error: (error) => {
-                console.log(error);
+            error: () => {
+                this.message.mensagemErro(MensagensProntasEnumModel.FALHA_CLASSE.descricao);
             }
         })
     }
@@ -54,9 +61,6 @@ export class ClasseComponent implements OnInit {
         this.service.findById(id).subscribe({
                 next: (response) => {
                     this.formClasse.patchValue(response);
-                },
-                error: (error) => {
-                    console.log(error);
                 },
             }
         );

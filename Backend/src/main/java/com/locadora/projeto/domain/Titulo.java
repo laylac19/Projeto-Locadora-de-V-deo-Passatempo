@@ -24,18 +24,18 @@ public class Titulo implements Serializable {
     @Column(name = "sinopse")
     private String sinopse;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_diretor")
     private Diretor diretor;
 
     @Column(name = "ano", nullable = false)
     private Integer ano;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_categoria")
     private Categoria categoria;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "id_classe")
     private Classe classe;
 

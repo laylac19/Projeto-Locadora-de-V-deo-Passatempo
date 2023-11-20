@@ -16,4 +16,6 @@
     <include file="db/changelog/202210182315_create_tabela_cliente.xml"/>
     <include file="db/changelog/202210182316_create_tabela_socio.xml"/>
     <include file="db/changelog/202210182341_create_tabela_dependente_socio_cliente.xml"/>
+    <include file="db/changelog/202211091357_create_tabela_locacao.xml"/>
+    <include file="db/changelog/202211161138_create_tabela_locacao_item.xml"/>
 </databaseChangeLog>

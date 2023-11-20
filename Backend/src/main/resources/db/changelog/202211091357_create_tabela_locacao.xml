@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="202209130827" author="layla">
+        <createSequence incrementBy="1" sequenceName="seq_locacao" startValue="1"/>
+        <createTable tableName="locacao">
+            <column name="id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_locacao"/>
+            </column>
+            <column name="data_locacao" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_devolucao_prevista" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="valor_cobrado" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_devolucao_efetiva" type="DATE"/>
+            <column name="multa_cobrada" type="DOUBLE"/>
+            <column name="cliente_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="item_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="BOOLEAN"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="cliente_id" baseTableName="locacao" constraintName="FK_LOCACAO_ON_CLIENTE" referencedColumnNames="id" referencedTableName="cliente"/>
+        <addForeignKeyConstraint baseColumnNames="item_id" baseTableName="locacao" constraintName="FK_LOCACAO_ON_ITEM" referencedColumnNames="id" referencedTableName="item"/>
+    </changeSet>
+</databaseChangeLog>

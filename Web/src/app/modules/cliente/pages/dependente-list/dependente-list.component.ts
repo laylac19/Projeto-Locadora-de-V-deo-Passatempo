@@ -1,11 +1,11 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ColunaModel} from "../../../../model/util/coluna.model";
-import {ClienteListModel} from "../../../../model/cliente-list.model";
+import {ColunaModel} from "../../../../shared/util/coluna.model";
+import {ClienteListModel} from "../../../../model/list/cliente-list.model";
 import {ClienteModel} from "../../../../model/cliente.model";
 import {ClienteFormComponent} from "../cliente-form/cliente-form.component";
 import {ClienteService} from "../../../../shared/service/cliente.service";
-import {ConfirmationService} from "primeng/api";
 import {EntidadeUtil} from "../../../../shared/util/entidade-util";
+import {MensagensConfirmacao} from "../../../../shared/util/msgConfirmacaoDialog.util";
 
 @Component({
     selector: 'app-dependente-list',
@@ -20,7 +20,7 @@ export class DependenteListComponent implements OnInit {
     public dependete: ClienteModel;
 
     public tituloModal: string;
-    public ativos: boolean;
+    public ativos: boolean = true;
 
     @Input() display = false;
     @Input() public configuracaoListagem?: boolean;
@@ -28,7 +28,7 @@ export class DependenteListComponent implements OnInit {
 
     constructor(
         private clienteService: ClienteService,
-        private confirmMessage: ConfirmationService
+        private confirmMessage: MensagensConfirmacao
     ) {
     }
 
@@ -47,13 +47,13 @@ export class DependenteListComponent implements OnInit {
         ]
     }
 
-    public listarDependentes(): void {
+    public listarDependentes(): boolean {
         if(this.configuracaoListagem === true) {
             this.listarDependentesInativos();
-            this.ativos = false;
+            return this.ativos = false;
         }
         this.listarDependentesAtivos();
-        this.ativos = true;
+        return this.ativos = true;
     }
 
     public listarDependentesAtivos(): void {
@@ -76,16 +76,14 @@ export class DependenteListComponent implements OnInit {
     }
 
     public confirmarAcao(id: number): void {
-        this.confirmarDialog(id, () => this.desativarDependente(id), EntidadeUtil.CLIENTE);
+        this.confirmMessage.confirmarDialog(id, () => this.desativarDependente(id), EntidadeUtil.CLIENTE);
     }
 
-    public confirmarDialog(id: number, alterarSituacao: () => void, entidade: EntidadeUtil): void {
-        this.confirmMessage.confirm({
-            header: 'Confirmação',
-            message: 'Deseja desativar esse(a) ' + entidade.descricao + ' ?',
-            acceptLabel: 'Sim',
-            rejectLabel: 'Cancelar',
-            accept: alterarSituacao
-        });
+    public visualizarDados($event: number) {
+
+    }
+
+    public reativarDependente($event: number) {
+
     }
 }

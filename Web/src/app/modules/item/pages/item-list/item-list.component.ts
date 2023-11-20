@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ItemListModel} from "../../../../model/item-list.model";
+import {ItemListModel} from "../../../../model/list/item-list.model";
 import {ItemModel} from "../../../../model/item.model";
 import {ItemComponent} from "../item/item.component";
-import {ConfirmationService} from "primeng/api";
 import {ItemService} from "../../../../shared/service/item.service";
-import {TituloModalEnum} from "../../../../model/util/titulo-modal-enum.model";
+import {TituloModalEnum} from "../../../../shared/util/titulo-modal-enum.model";
 import {EntidadeUtil} from "../../../../shared/util/entidade-util";
-import {ColunaModel} from "../../../../model/util/coluna.model";
+import {ColunaModel} from "../../../../shared/util/coluna.model";
+import {MensagensConfirmacao} from "../../../../shared/util/msgConfirmacaoDialog.util";
 
 @Component({
     selector: 'app-item-list',
@@ -16,7 +16,7 @@ import {ColunaModel} from "../../../../model/util/coluna.model";
 export class ItemListComponent implements OnInit {
 
     public colunas: ColunaModel[] = [];
-    public listaItnes: ItemListModel[] = [];
+    public listaItens: ItemListModel[] = [];
     public item: ItemModel;
 
     public tituloModal: string;
@@ -26,7 +26,7 @@ export class ItemListComponent implements OnInit {
 
     constructor(
         private itemService: ItemService,
-        private confirmMessage: ConfirmationService
+        private confirmMessage: MensagensConfirmacao
     ) {
     }
 
@@ -47,7 +47,7 @@ export class ItemListComponent implements OnInit {
 
     public listarTodosItens(): void {
         this.itemService.findAll().subscribe((data) => {
-            this.listaItnes = data;
+            this.listaItens = data;
         })
     }
 
@@ -70,17 +70,7 @@ export class ItemListComponent implements OnInit {
     }
 
     public confirmarAcao(id: number): void {
-        this.confirmarDialog(id, () => this.desativarItem(id), EntidadeUtil.ITEM_TITULO);
-    }
-
-    public confirmarDialog(id: number, alterarSituacao: () => void, entidade: EntidadeUtil): void {
-        this.confirmMessage.confirm({
-            header: 'Confirmação',
-            message: 'Deseja desativar esse(a) ' + entidade.descricao + ' ?',
-            acceptLabel: 'Sim',
-            rejectLabel: 'Cancelar',
-            accept: alterarSituacao
-        });
+        this.confirmMessage.confirmarDialog(id, () => this.desativarItem(id), EntidadeUtil.ITEM_TITULO);
     }
 
     public resetarForm(): void {

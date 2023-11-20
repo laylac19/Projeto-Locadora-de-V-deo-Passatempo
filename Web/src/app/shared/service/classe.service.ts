@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
 import {ClasseModel} from "../../model/classe.model";
-import {ClasseListModel} from "../../model/classe-list.model";
+import {ClasseListModel} from "../../model/list/classe-list.model";
 import {SelectItem} from "primeng/api";
 
 @Injectable({

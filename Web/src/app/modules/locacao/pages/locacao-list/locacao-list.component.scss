@@ -1,0 +1,25 @@
+div.item-pagina {
+    padding-bottom: 10px;
+}
+
+span.titulo {
+    font-size: 20pt;
+    font-family: 'Kreon', Verdana, sans-serif;
+    font-weight: 700;
+    margin-left: 10px;
+    color: var(--cor-tema-raisin-black);
+}
+
+div.column-action {
+    width: 132px !important;
+    justify-content: space-evenly;
+}
+
+
+.campo-form {
+    padding-left: 0;
+}
+
+.campo-pesquisa {
+    min-width: 93%;
+}

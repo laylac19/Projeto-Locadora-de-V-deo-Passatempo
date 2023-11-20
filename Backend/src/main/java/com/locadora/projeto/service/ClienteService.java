@@ -11,7 +11,11 @@ public interface ClienteService {
 
     List<ClienteSocioListDTO> findAllPartners(Boolean situacao);
 
-    List<DropdownDTO> NonPartnersCustomersDropdown();
+    List<DropdownDTO> searchDependentsOfPartner(Integer idSocio);
+
+    List<DropdownDTO> nonPartnersCustomersDropdown();
+
+    List<DropdownDTO> searchDropdown();
 
     ClienteDTO find(Integer id);
 
@@ -22,4 +26,6 @@ public interface ClienteService {
     void saveDependent(VinculoEntidadeDTO dto);
 
     public SocioDTO saveSocio(SocioDTO dto);
+
+    List<DropdownDTO> dropdownLocacao();
 }

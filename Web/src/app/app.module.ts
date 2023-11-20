@@ -19,6 +19,8 @@ import { MenuControleAcervoComponent } from './components/menu-controle-acervo/m
 import {TituloModule} from "./modules/titulo/titulo.module";
 import { MenuAtendimentoClienteComponent } from './components/menu-atendimento-cliente/menu-atendimento-cliente.component';
 import { AtendimentoClienteComponent } from './components/atendimento-cliente/atendimento-cliente.component';
+import {MensagensUtil} from "./shared/util/mensagens-util";
+import {MensagensConfirmacao} from "./shared/util/msgConfirmacaoDialog.util";
 
 @NgModule({
     declarations: [
@@ -44,7 +46,7 @@ import { AtendimentoClienteComponent } from './components/atendimento-cliente/at
         TituloModule
     ],
     providers: [
-        ConfirmationService,
+        ConfirmationService, MensagensUtil, MensagensConfirmacao
     ],
     exports: [
         ControleAcervoComponent

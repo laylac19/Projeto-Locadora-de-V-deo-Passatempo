@@ -1,0 +1,95 @@
+<div class="titulo-pagina">
+    <em class="icone-uso bi bi-chat-dots"></em>
+    <span class="titulo-caso">ATENDIMENTO AO CLIENTE</span>
+</div>
+<div class="detalhe"></div>
+<div class="flex flex-column col-12">
+    <div class="item-pagina col-12">
+        <span class="titulo">Locações e Devoluções</span>
+    </div>
+    <div class="item-pagina pr-2">
+        <button pButton type="button"
+                icon="pi pi-plus"
+                class="button-action ui-button-success button-save-new"
+                iconPos="left"
+                label="Nova locação"
+                (click)="novaLocacao()">
+        </button>
+    </div>
+    <div class="field col-12 align-content-center">
+        <span class="item-pesquisa">
+            <label class="campo-form col-2">Nº Série Item</label>
+            <input class="campo-pesquisa col-10" type="text" pInputText placeholder="Pesquisar" [(ngModel)]="filterItem">
+        </span>
+    </div>
+    <div class="item-pagina tabela">
+        <div class="item-pagina tabela pt-1">
+            <p-table [columns]="colunas" [value]="listaMovimentacaoLocacao" [paginator]="true" [rows]="7"
+                     [responsive]="true" [globalFilterFields]="['numeroSerie']">
+                <ng-template pTemplate="header" let-colunas>
+                    <tr>
+                        <th id="titulo-colunas" *ngFor="let col of colunas" [pSortableColumn]="col.field"
+                            [style]="'width:'+ col.width">
+                            {{col.header}}
+                            <ng-container>
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                            </ng-container>
+                        </th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-colunas="columns">
+                    <tr *ngFor="let item of items | filter:filterItem">
+                        <td *ngFor="let col of colunas">
+                            <ng-container *ngIf="col.field != 'acoes' ">
+                                {{rowData[col.field]}}
+                            </ng-container>
+                            <ng-container *ngIf="col.field === 'acoes' ">
+                                <div class="column-action flex justify-content-evenly">
+                                    <button pButton type="button"
+                                            icon="pi pi-eye"
+                                            class="button-action ui-button-success button-save-new"
+                                            iconPos="left"
+                                            pTooltip="Visualizar Dados"
+                                            (click)="visualizarDados(rowData)">
+                                    </button>
+                                </div>
+                                <div class="column-action flex justify-content-evenly">
+                                    <button pButton type="button"
+                                            icon="pi pi-pencil"
+                                            class="button-action ui-button-success button-save-new"
+                                            iconPos="left"
+                                            pTooltip="Editar Dados Locação"
+                                            (click)="editarLocacao(rowData)">
+                                    </button>
+                                </div>
+                                <div class="column-action flex justify-content-evenly">
+                                    <button pButton type="button"
+                                            icon="bi bi-inbox"
+                                            class="button-action ui-button-success button-save-new"
+                                            iconPos="left"
+                                            pTooltip="Realizar Devolução"
+                                            (click)="ralizarDevolucaoItem(rowData)">
+                                    </button>
+                                </div>
+                                <div class="column-action flex justify-content-evenly">
+                                    <button pButton type="button"
+                                            icon="pi pi-trash"
+                                            class="button-action ui-button-success button-save-new"
+                                            iconPos="left"
+                                            pTooltip="Excluir Locação"
+                                            (click)="desativarLocacao(rowData)">
+                                    </button>
+                                </div>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+<p-dialog [(visible)]="display" header="{{tituloModal}}" [modal]="true" [contentStyle]="{'max-height':'100%'}"
+          (onHide)="resetarForm()">
+    <app-locacao [locacaoModel]="locacao" (resForm)="fecharModal()"></app-locacao>
+</p-dialog>

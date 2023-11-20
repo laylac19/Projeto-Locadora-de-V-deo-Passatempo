@@ -3,10 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
 import {AtorModel} from "../../model/ator.model";
-import {AtorListModel} from "../../model/ator-list.model";
+import {AtorListModel} from "../../model/list/ator-list.model";
 import {SelectItem} from "primeng/api";
-import {ClasseModel} from "../../model/classe.model";
-import {VinculoEntidades} from "../../model/vinculo-entidade.model";
 
 @Injectable({
     providedIn: 'root'

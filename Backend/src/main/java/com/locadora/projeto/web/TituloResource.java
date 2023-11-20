@@ -65,6 +65,7 @@ public class TituloResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarTitulo(@PathVariable("id") Integer id){
         service.delete(id);
+        System.out.println("teste");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

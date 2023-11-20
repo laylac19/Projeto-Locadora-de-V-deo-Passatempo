@@ -18,7 +18,7 @@ import {AtorListComponent} from './pages/ator-list/ator-list.component';
     imports: [
         CommonModule,
         AtorRoutingModule,
-        SharedModule
+        SharedModule,
     ]
 })
 export class AtorModule {

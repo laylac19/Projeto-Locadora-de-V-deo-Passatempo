@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
-import {TituloListModel} from "../../model/titulo-list.model";
+import {TituloListModel} from "../../model/list/titulo-list.model";
 import {TituloModel} from "../../model/titulo.model";
 import {SelectItem} from "primeng/api";
 import {VinculoEntidades} from "../../model/vinculo-entidade.model";

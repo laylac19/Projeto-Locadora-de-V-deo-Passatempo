@@ -6,6 +6,7 @@ export class EntidadeUtil {
     static readonly TITULO = new EntidadeUtil(4, 'Filme');
     static readonly ITEM_TITULO = new EntidadeUtil(5, 'Item Filme');
     static readonly CLIENTE = new EntidadeUtil(6, 'Cliente');
+    static readonly LOCACAO = new EntidadeUtil(7, 'Locação');
 
 
     static values = [

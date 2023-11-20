@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "cliente")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Cliente implements Serializable {
 
     @Id

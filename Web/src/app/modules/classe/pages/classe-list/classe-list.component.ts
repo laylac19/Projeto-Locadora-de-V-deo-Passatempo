@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ClasseModel} from "../../../../model/classe.model";
 import {ClasseComponent} from "../classe/classe.component";
-import {TituloModalEnum} from "../../../../model/util/titulo-modal-enum.model";
+import {TituloModalEnum} from "../../../../shared/util/titulo-modal-enum.model";
 import {ClasseService} from "../../../../shared/service/classe.service";
-import {ConfirmationService} from "primeng/api";
-import {ClasseListModel} from "../../../../model/classe-list.model";
+import {ClasseListModel} from "../../../../model/list/classe-list.model";
 import {EntidadeUtil} from "../../../../shared/util/entidade-util";
-import {ColunaModel} from "../../../../model/util/coluna.model";
+import {ColunaModel} from "../../../../shared/util/coluna.model";
+import {MensagensConfirmacao} from "../../../../shared/util/msgConfirmacaoDialog.util";
 
 @Component({
     selector: 'app-classe-list',
@@ -27,7 +27,7 @@ export class ClasseListComponent implements OnInit {
 
     constructor(
         private classeService: ClasseService,
-        private confirmMessage: ConfirmationService
+        private confirmMessage: MensagensConfirmacao,
     ) {
     }
 
@@ -43,14 +43,6 @@ export class ClasseListComponent implements OnInit {
             new ColunaModel('prazoDevolucao', 'Prazo De Devolução'),
             new ColunaModel('acoes', 'Ações', '132px')
         ]
-    }
-
-    campoPrazoDevolucao(coluna: string): boolean {
-        return coluna === 'prazoDevolucao';
-    }
-
-    campoValor(coluna: string): boolean {
-        return coluna == 'valor';
     }
 
     public buscarClasse(): void {
@@ -78,17 +70,7 @@ export class ClasseListComponent implements OnInit {
     }
 
     public confirmarAcao(id: number): void {
-        this.confirmarDialog(id, () => this.desativarCasse(id), EntidadeUtil.CLASSE);
-    }
-
-    public confirmarDialog(id: number, alterarSituacao: () => void, entidade: EntidadeUtil): void {
-        this.confirmMessage.confirm({
-            header: 'Confirmação',
-            message: 'Deseja desativar esse(a) ' + entidade.descricao + ' ?',
-            acceptLabel: 'Sim',
-            rejectLabel: 'Cancelar',
-            accept: alterarSituacao
-        });
+        this.confirmMessage.confirmarDialog(id, () => this.desativarCasse(id), EntidadeUtil.CLASSE);
     }
 
     public resetarForm(): void {

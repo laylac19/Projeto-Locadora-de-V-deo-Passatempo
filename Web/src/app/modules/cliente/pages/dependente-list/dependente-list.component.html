@@ -1,93 +1,29 @@
-<div class="container col-12 flex">
+<div class="flex flex-column col-12 flex">
     <div class="item-pagina tabela" *ngIf="ativos">
         <div class="item-pagina col-12">
             <span class="titulo">Dependentes Ativos</span>
         </div>
-        <p-table [columns]="colunas" [value]="listaDependentesAtivos" [paginator]="true" [rows]="7" [responsive]="true"
-                 sortMode="multiple">
-            <ng-template pTemplate="header" let-colunas>
-                <tr>
-                    <th id="titulo-colunas-ativos" *ngFor="let col of colunas" [pSortableColumn]="col.field"
-                        [style]="'width:'+ col.width">
-                        {{col.header}}
-                        <ng-container>
-                            <p-sortIcon [field]="col.field"></p-sortIcon>
-                        </ng-container>
-                    </th>
-                </tr>
-            </ng-template>
-
-            <ng-template pTemplate="body" let-rowData let-colunas="columns">
-                <tr>
-                    <td *ngFor="let col of colunas">
-                        <ng-container *ngIf="col.field != 'acoes' ">
-                            {{rowData[col.field]}}
-                        </ng-container>
-
-                        <ng-container *ngIf="col.field === 'acoes' ">
-                            <div class="column-action flex justify-content-evenly">
-                                <button pButton type="button"
-                                        icon="pi pi-pencil"
-                                        class="button-action ui-button-success button-save-new"
-                                        iconPos="left"
-                                        pTooltip="Editar Sócio">
-                                </button>
-                                <button pButton type="button"
-                                        icon="pi pi-trash"
-                                        class="button-action ui-button-success button-save-new"
-                                        iconPos="left"
-                                        pTooltip="Excluir Sócio">
-                                </button>
-                            </div>
-                        </ng-container>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
+        <app-tabela-generica
+            [colunas]="colunas"
+            [dados]="listaDependentesAtivos"
+            [paginator]="true"
+            [rows]="7"
+            [visualizarDado]="true" [desativarDado]="true"
+            (abrirModalVisualizar)="visualizarDados($event)" (deletarDado)="confirmarAcao($event)">
+        </app-tabela-generica>
     </div>
     <div class="item-pagina tabela" *ngIf="!ativos">
         <div class="item-pagina col-12">
             <span class="titulo">Dependentes Inativos</span>
         </div>
-        <p-table [columns]="colunas" [value]="listaDependentesInativos" [paginator]="true" [rows]="7" [responsive]="true" sortMode="multiple">
-            <ng-template pTemplate="header" let-colunas>
-                <tr>
-                    <th id="titulo-colunas" *ngFor="let col of colunas" [pSortableColumn]="col.field"
-                        [style]="'width:'+ col.width">
-                        {{col.header}}
-                        <ng-container>
-                            <p-sortIcon [field]="col.field"></p-sortIcon>
-                        </ng-container>
-                    </th>
-                </tr>
-            </ng-template>
-
-            <ng-template pTemplate="body" let-rowData let-colunas="columns">
-                <tr>
-                    <td *ngFor="let col of colunas">
-                        <ng-container *ngIf="col.field != 'acoes' ">
-                            {{rowData[col.field]}}
-                        </ng-container>
-
-                        <ng-container *ngIf="col.field === 'acoes' ">
-                            <div class="column-action flex justify-content-evenly">
-                                <button pButton type="button"
-                                        icon="pi pi-pencil"
-                                        class="button-action ui-button-success button-save-new"
-                                        iconPos="left"
-                                        pTooltip="Editar Sócio">
-                                </button>
-                                <button pButton type="button"
-                                        icon="pi pi-trash"
-                                        class="button-action ui-button-success button-save-new"
-                                        iconPos="left"
-                                        pTooltip="Excluir Sócio">
-                                </button>
-                            </div>
-                        </ng-container>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
+        <app-tabela-generica
+            [colunas]="colunas"
+            [dados]="listaDependentesAtivos"
+            [paginator]="true"
+            [rows]="7"
+            [visualizarDado]="true" [reativarDado]="true"
+            (abrirModalVisualizar)="visualizarDados($event)"
+            (reativar)="reativarDependente($event)">
+        </app-tabela-generica>
     </div>
 </div>

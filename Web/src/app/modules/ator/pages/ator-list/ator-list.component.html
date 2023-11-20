@@ -1,4 +1,9 @@
-<div class="container col-12 flex">
+<div class="titulo-pagina">
+    <em class="icone-uso bi bi-archive"></em>
+    <span class="titulo-caso">CONTROLE ACERVO</span>
+</div>
+<div class="detalhe"></div>
+<div class="flex flex-column col-12">
     <div class="item-pagina col-12">
         <span class="titulo">Atores</span>
     </div>
@@ -13,50 +18,14 @@
         </button>
     </div>
 
-    <div class="item-pagina tabela">
-        <p-table [columns]="colunas" [value]="listaAtor" [paginator]="true" [rows]="7" [responsive]="true" sortMode="multiple">
-            <ng-template pTemplate="header" let-colunas>
-                <tr>
-                    <th id="titulo-colunas" *ngFor="let col of colunas" [pSortableColumn]="col.field"
-                        [style]="'width:'+ col.width">
-                        {{col.header}}
-                        <ng-container>
-                            <p-sortIcon [field]="col.field"></p-sortIcon>
-                        </ng-container>
-                    </th>
-                </tr>
-            </ng-template>
-
-            <ng-template pTemplate="body" let-rowData let-colunas="columns">
-                <tr>
-                    <td *ngFor="let col of colunas">
-                        <ng-container *ngIf="col.field != 'acoes' ">
-                            {{rowData[col.field]}}
-                        </ng-container>
-
-                        <ng-container *ngIf="col.field === 'acoes' ">
-                            <div class="column-action flex justify-content-evenly">
-                                <button pButton type="button"
-                                        icon="pi pi-pencil"
-                                        class="button-action ui-button-success button-save-new"
-                                        iconPos="left"
-                                        pTooltip="Editar Ator"
-                                        (click)="editarAtor(rowData.id)">
-                                </button>
-                                <button pButton type="button"
-                                        icon="pi pi-trash"
-                                        class="button-action ui-button-success button-save-new"
-                                        iconPos="left"
-                                        pTooltip="Excluir Ator"
-                                        (click)="confirmarAcao(rowData.id)">
-                                </button>
-                            </div>
-                        </ng-container>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
+    <app-tabela-generica
+        [colunas]="colunas"
+        [dados]="listaAtor"
+        [paginator]="true"
+        [rows]="7"
+        [editarDado]="true" [desativarDado]="true"
+        (abrirModalHabilitado)="editarAtor($event)" (deletarDado)="confirmarAcao($event)">
+    </app-tabela-generica>
 </div>
 <p-dialog [(visible)]="display" header="{{tituloModal}}" [modal]="true" [contentStyle]="{'max-height':'100%'}"
           (onHide)="resetarForm()">

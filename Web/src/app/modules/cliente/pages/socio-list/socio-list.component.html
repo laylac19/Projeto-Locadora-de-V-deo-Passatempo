@@ -1,4 +1,4 @@
-<div class="container col-12 flex">
+<div class="flex flex-column col-12">
     <div class="item-pagina tabela" *ngIf="ativos">
         <div class="item-pagina col-12">
             <span class="titulo">Sócios Ativos</span>
@@ -12,95 +12,29 @@
                     (click)="novoSocio()">
             </button>
         </div>
-        <p-table [columns]="colunas" [value]="listaSociosAtivos" [paginator]="true" [rows]="7" [responsive]="true"
-                 sortMode="multiple">
-            <ng-template pTemplate="header" let-colunas>
-                <tr>
-                    <th id="titulo-colunas-ativos" *ngFor="let col of colunas" [pSortableColumn]="col.field"
-                        [style]="'width:'+ col.width">
-                        {{col.header}}
-                        <ng-container>
-                            <p-sortIcon [field]="col.field"></p-sortIcon>
-                        </ng-container>
-                    </th>
-                </tr>
-            </ng-template>
-
-            <ng-template pTemplate="body" let-rowData let-colunas="columns">
-                <tr>
-                    <td *ngFor="let col of colunas">
-                        <ng-container *ngIf="col.field != 'acoes' ">
-                            {{rowData[col.field]}}
-                        </ng-container>
-
-                        <ng-container *ngIf="col.field === 'acoes' ">
-                            <div class="column-action flex justify-content-evenly">
-                                <button pButton type="button"
-                                        icon="pi pi-pencil"
-                                        class="button-action ui-button-success button-save-new"
-                                        iconPos="left"
-                                        pTooltip="Editar Sócio"
-                                        (click)="editarSocio(rowData.id)">
-                                </button>
-                                <button pButton type="button"
-                                        icon="pi pi-trash"
-                                        class="button-action ui-button-success button-save-new"
-                                        iconPos="left"
-                                        pTooltip="Excluir Sócio"
-                                        (click)="desativarSocio(rowData.id)">
-                                </button>
-                            </div>
-                        </ng-container>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
+        <app-tabela-generica
+            [colunas]="colunas"
+            [dados]="listaSociosAtivos"
+            [paginator]="true"
+            [rows]="7"
+            [editarDado]="true" [desativarDado]="true" [visualizarDado]="true"
+            (abrirModalVisualizar)="visualizarDadosSocio($event)"
+            (abrirModalHabilitado)="editarSocio($event)"
+            (deletarDado)="confirmarAcao($event)">
+        </app-tabela-generica>
     </div>
     <div class="item-pagina tabela" *ngIf="!ativos">
         <div class="item-pagina">
             <span class="titulo">Sócios Inativos</span>
         </div>
-        <p-table [columns]="colunas" [value]="listaSociosInativos" [paginator]="true" [rows]="7" [responsive]="true" sortMode="multiple">
-            <ng-template pTemplate="header" let-colunas>
-                <tr>
-                    <th id="titulo-colunas" *ngFor="let col of colunas" [pSortableColumn]="col.field"
-                        [style]="'width:'+ col.width">
-                        {{col.header}}
-                        <ng-container>
-                            <p-sortIcon [field]="col.field"></p-sortIcon>
-                        </ng-container>
-                    </th>
-                </tr>
-            </ng-template>
-
-            <ng-template pTemplate="body" let-rowData let-colunas="columns">
-                <tr>
-                    <td *ngFor="let col of colunas">
-                        <ng-container *ngIf="col.field != 'acoes' ">
-                            {{rowData[col.field]}}
-                        </ng-container>
-
-                        <ng-container *ngIf="col.field === 'acoes' ">
-                            <div class="column-action flex justify-content-evenly">
-                                <button pButton type="button"
-                                        icon="pi pi-pencil"
-                                        class="button-action ui-button-success button-save-new"
-                                        iconPos="left"
-                                        pTooltip="Visualizar Dados"
-                                        (click)="visualizarDadosSocio(rowData.id)">
-                                </button>
-                                <button pButton type="button"
-                                        icon="pi pi-trash"
-                                        class="button-action ui-button-success button-save-new"
-                                        iconPos="left"
-                                        pTooltip="Reativar Sócio">
-                                </button>
-                            </div>
-                        </ng-container>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
+        <app-tabela-generica
+            [colunas]="colunas"
+            [dados]="listaSociosInativos"
+            [paginator]="true"
+            [rows]="7"
+            [visualizarDado]="true" [reativarDado]="true"
+            (abrirModalVisualizar)="visualizarDadosSocio($event)" (reativar)="rativarSocio($event)">
+        </app-tabela-generica>
     </div>
 </div>
 <p-dialog [(visible)]="display" header="{{tituloModal}}" [modal]="true" [contentStyle]="{'max-height':'100%'}"

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SocioRepository extends JpaRepository <Socio, Integer>{
+public interface SocioRepository extends JpaRepository<Socio, Integer>{
 
     Boolean existsSocioById(Integer id);
 }

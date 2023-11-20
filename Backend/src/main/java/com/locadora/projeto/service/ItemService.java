@@ -1,5 +1,6 @@
 package com.locadora.projeto.service;
 
+import com.locadora.projeto.service.dto.DropdownDTO;
 import com.locadora.projeto.service.dto.ItemDTO;
 import com.locadora.projeto.service.dto.ItemListDTO;
 
@@ -14,4 +15,8 @@ public interface ItemService {
     ItemDTO save(ItemDTO dto);
 
     void delete(Integer id);
+
+    List<DropdownDTO> searchDropdownAvailableItems();
+
+    Double buscarValorItem(Integer idItem);
 }

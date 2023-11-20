@@ -28,9 +28,11 @@ export class SidemenuComponent {
 
     @Input() public opcoesAtendimentoCliente: OpcaoMenuModel[] = [
         new OpcaoMenuModel('pi pi-home', 'Início', 'Início',
-            () => window.alert('Inicio Atendimento ao Cliente - Efetuar Locação!!!')),
+            () => this.router.navigateByUrl('/Locacao')),
         new OpcaoMenuModel('bi bi-person-plus', 'Cadastrar Clientes', 'Cadastrar Clientes',
             () => this.router.navigateByUrl('/Clientes')),
+        new OpcaoMenuModel('bi bi-cart4', 'Locações e Devoluções', 'Efetuar Movimentação',
+            () => this.router.navigateByUrl('/Locacao')),
     ];
 
 

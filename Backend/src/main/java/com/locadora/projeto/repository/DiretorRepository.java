@@ -1,6 +1,5 @@
 package com.locadora.projeto.repository;
 
-import com.locadora.projeto.domain.Ator;
 import com.locadora.projeto.domain.Diretor;
 import com.locadora.projeto.service.dto.DropdownDTO;
 import org.springframework.data.jpa.repository.JpaRepository;

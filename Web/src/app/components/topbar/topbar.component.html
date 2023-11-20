@@ -5,17 +5,4 @@
         </button>
         <span class="titulo">Locadora</span>
     </div>
-    <div class="menu-topbar flex">
-        <div class="opcao-menu" *ngFor="let opcao of opcoes">
-            <button pButton
-                    pRipple
-                    type="button"
-                    [icon]="opcao.icone"
-                    [label]="opcao.label"
-                    [pTooltip]="opcao.tooltip"
-                    tooltipPosition="bottom"
-                    (click)="opcao.aoClicar()">
-            </button>
-        </div>
-    </div>
 </div>

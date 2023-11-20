@@ -1,16 +1,16 @@
-<div class="form p-fluid p-">
+<div class="form p-fluid">
     <form [formGroup]="formTituloFilme" class="ui-fluid">
         <div class="field col-12">
             <span class="item">
                 <label class="campo-form" for="inputNomeTitulo">Nome Titulo</label>
-                <input type="text" id="inputNomeTitulo" pInputText formControlName="nome">
+                <input type="text" id="inputNomeTitulo" pInputText formControlName="nome" [disabled]="desabilitarCampo">
             </span>
         </div>
         <div class="area flex">
             <div class="field col-2">
                 <span class="item">
                     <label class="campo-form" for="inputAno">Ano</label>
-                    <input type="text" id="inputAno" pInputText formControlName="ano">
+                    <input type="text" id="inputAno" pInputText formControlName="ano" [disabled]="desabilitarCampo">
                 </span>
             </div>
             <div class="field col-5">
@@ -118,7 +118,8 @@
                                                         icon="pi pi-trash"
                                                         class="button-action ui-button-success button-save-new"
                                                         iconPos="left"
-                                                        pTooltip="Retirar">
+                                                        pTooltip="Retirar"
+                                                        (click)="retirarMembroElenco(rowData)">
                                                 </button>
                                             </div>
                                         </ng-container>

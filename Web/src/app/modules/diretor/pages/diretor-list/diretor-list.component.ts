@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {DiretorModel} from "../../../../model/diretor.model";
 import {DiretorComponent} from "../diretor/diretor.component";
-import {TituloModalEnum} from "../../../../model/util/titulo-modal-enum.model";
-import {DiretorListModel} from "../../../../model/diretor-list.model";
+import {TituloModalEnum} from "../../../../shared/util/titulo-modal-enum.model";
+import {DiretorListModel} from "../../../../model/list/diretor-list.model";
 import {DiretorService} from "../../../../shared/service/diretor.service";
-import {ConfirmationService} from "primeng/api";
 import {EntidadeUtil} from "../../../../shared/util/entidade-util";
-import {ColunaModel} from "../../../../model/util/coluna.model";
+import {ColunaModel} from "../../../../shared/util/coluna.model";
+import {MensagensConfirmacao} from "../../../../shared/util/msgConfirmacaoDialog.util";
 
 @Component({
     selector: 'app-diretor-list',
@@ -27,7 +27,7 @@ export class DiretorListComponent implements OnInit {
 
     constructor(
         private diretorService: DiretorService,
-        private confirmMessage: ConfirmationService
+        private confirmMessage: MensagensConfirmacao
     ) {
     }
 
@@ -68,17 +68,7 @@ export class DiretorListComponent implements OnInit {
     }
 
     public confirmarAcao(id: number): void {
-        this.confirmarDialog(id, () => this.desativarDiretor(id), EntidadeUtil.DIRETOR);
-    }
-
-    public confirmarDialog(id: number, alterarSituacao: () => void, entidade: EntidadeUtil): void {
-        this.confirmMessage.confirm({
-            header: 'Confirmação',
-            message: 'Deseja desativar esse(a) ' + entidade.descricao + ' ?',
-            acceptLabel: 'Sim',
-            rejectLabel: 'Cancelar',
-            accept: alterarSituacao
-        });
+        this.confirmMessage.confirmarDialog(id, () => this.desativarDiretor(id), EntidadeUtil.DIRETOR);
     }
 
     public resetarForm(): void {
@@ -90,5 +80,9 @@ export class DiretorListComponent implements OnInit {
             this.buscarDiretor();
         }
         this.display = false;
+    }
+
+    visualizarDados($event: number) {
+
     }
 }

@@ -23,3 +23,29 @@ div.action-form {
     justify-content: space-between;
 }
 
+div.titulo-pagina {
+    text-align: center;
+    background-color: #eff0d15c;
+    padding-top: 7px;
+}
+
+span.titulo-caso {
+    color: var(--cor-tema-eton-blue);
+    font-size: 25pt;
+    font-family: 'Kreon', Verdana, sans-serif;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px 10px;
+}
+
+div.detalhe {
+    padding: 8px;
+    border-bottom: 5px solid var(--cor-tema-bittersweet);
+}
+
+.icone-uso {
+    color: var(--cor-tema-eton-blue);
+    text-align: center;
+    font-size: 20pt;
+    padding-right: 30px;
+}

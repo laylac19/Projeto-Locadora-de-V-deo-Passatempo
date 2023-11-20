@@ -50,7 +50,11 @@ public class ClienteServiceImpl implements ClienteService {
         return mapper.toDto(findbyId(id));
     }
 
-    public List<DropdownDTO> NonPartnersCustomersDropdown() {
+    public List<DropdownDTO> searchDependentsOfPartner(Integer idSocio) {
+        return repository.buscarDependentesSocio(idSocio);
+    }
+
+    public List<DropdownDTO> nonPartnersCustomersDropdown() {
         return repository.buscarClientesNaoSocios();
     }
 
@@ -64,6 +68,10 @@ public class ClienteServiceImpl implements ClienteService {
         return socioRepository.findById(id).
                 orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         MensagemSocioUtil.SOCIO_NAO_ENCONTRADO));
+    }
+
+    public List<DropdownDTO> searchDropdown() {
+        return repository.buscarDropdown();
     }
 
     public ClienteDTO save(ClienteDTO dto) {
@@ -123,5 +131,9 @@ public class ClienteServiceImpl implements ClienteService {
 
     public SocioDTO saveSocio(SocioDTO dto){
         return socioMapper.toDto(socioRepository.save(socioMapper.toEntity(dto)));
+    }
+
+    public List<DropdownDTO> dropdownLocacao(){
+        return repository.dropdownClientesLocacao();
     }
 }

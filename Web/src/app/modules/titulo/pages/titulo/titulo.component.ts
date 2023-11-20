@@ -2,12 +2,14 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TituloModel} from "../../../../model/titulo.model";
 import {TituloService} from "../../../../shared/service/titulo.service";
-import {ColunaModel} from "../../../../model/util/coluna.model";
+import {ColunaModel} from "../../../../shared/util/coluna.model";
 import {SelectItem} from "primeng/api";
 import {ClasseService} from "../../../../shared/service/classe.service";
 import {DiretorService} from "../../../../shared/service/diretor.service";
 import {AtorService} from "../../../../shared/service/ator.service";
 import {VinculoEntidades} from "../../../../model/vinculo-entidade.model";
+import {MensagensProntasEnumModel} from "../../../../shared/util/mensagensProntasEnum.model";
+import {MensagensUtil} from "../../../../shared/util/mensagens-util";
 
 @Component({
     selector: 'app-titulo',
@@ -27,27 +29,29 @@ export class TituloComponent implements OnInit {
     public formTituloFilme: FormGroup;
     public novoTituloFilme: TituloModel;
     public vinculo: VinculoEntidades;
+    public model: TituloModel;
 
     public listarTitulos: boolean = false;
     public listarElenco: boolean = false;
-    // public abilitarAcordion: boolean = true;
-    // public abirAcordion: boolean = false;
     public abilitarBotao: boolean = false;
+    public desabilitarCampo: boolean = false;
+
     public idTitulo: number;
     public idAtor: number;
-    public model: TituloModel;
 
     @Input() tituloFilmeModel: TituloModel;
     @Input() abilitarAcordion: boolean;
     @Input() abirAcordion: boolean;
     @Output() resForm: EventEmitter<boolean> = new EventEmitter();
 
+
     constructor(
         private builder: FormBuilder,
         private tituloService: TituloService,
         private classeService: ClasseService,
         private diretorService: DiretorService,
-        private atorService: AtorService
+        private atorService: AtorService,
+        private message: MensagensUtil
     ) {
     }
 
@@ -116,9 +120,13 @@ export class TituloComponent implements OnInit {
                 this.idTitulo = response.id;
                 this.abilitarAcordion = false;
                 this.abirAcordion = true;
+                if (this.novoTituloFilme.id) {
+                    this.message.mensagemSucesso(MensagensProntasEnumModel.ATUALIZAR_TITULO.descricao);
+                } else {
+                    this.message.mensagemSucesso(MensagensProntasEnumModel.CADASTRO_TITULO.descricao);}
             },
-            error: (error) => {
-                console.log(error);
+            error: () => {
+                this.message.mensagemErro(MensagensProntasEnumModel.FALHA_ATOR.descricao);
             }
         });
     }
@@ -129,8 +137,16 @@ export class TituloComponent implements OnInit {
                     this.formTituloFilme.patchValue(response);
                     this.listarAtoresElenco(id);
                 },
-                error: (error) => {
-                    console.log(error);
+            }
+        );
+    }
+
+    public visualizarDadosTituloFilme(id: number): void {
+        this.tituloService.findById(id).subscribe({
+                next: (response) => {
+                    this.formTituloFilme.patchValue(response);
+                    this.listarAtoresElenco(id);
+                    this.formTituloFilme.disable();
                 },
             }
         );
@@ -138,6 +154,7 @@ export class TituloComponent implements OnInit {
 
     public fecharForm(): void {
         this.formTituloFilme.reset();
+        this.formTituloFilme.enable();
         this.resForm.emit();
         this.listaElenco = [];
     }
@@ -157,6 +174,10 @@ export class TituloComponent implements OnInit {
     public listarAtoresElenco(idFilme: number): void {
         this.atorService.findCastMovie(idFilme).subscribe((dataElenco) => {
             this.listaElenco = dataElenco;
-        })
+        });
+    }
+
+    public retirarMembroElenco(rowData: any): void {
+        this.listaElenco = this.listaElenco.slice(rowData.value);
     }
 }

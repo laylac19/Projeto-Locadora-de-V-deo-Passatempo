@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {DiretorModel} from "../../model/diretor.model";
 import {Observable} from "rxjs";
-import {DiretorListModel} from "../../model/diretor-list.model";
+import {DiretorListModel} from "../../model/list/diretor-list.model";
 import {SelectItem} from "primeng/api";
 
 @Injectable({

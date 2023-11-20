@@ -71,7 +71,42 @@
                         </div>
                     </div>
                     <div class="item-pagina tabela pt-1">
-                        <app-dependente-list></app-dependente-list>
+                        <p-table [columns]="colunas" [value]="listaDependentesSocio" [paginator]="true" [rows]="7" [responsive]="true"
+                                 sortMode="multiple">
+                            <ng-template pTemplate="header" let-colunas>
+                                <tr>
+                                    <th id="titulo-colunas" *ngFor="let col of colunas" [pSortableColumn]="col.field"
+                                        [style]="'width:'+ col.width">
+                                        {{col.header}}
+                                        <ng-container>
+                                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                                        </ng-container>
+                                    </th>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-rowData let-colunas="columns">
+                                <tr>
+                                    <td *ngFor="let col of colunas">
+                                        <ng-container *ngIf="col.field != 'acoes' ">
+                                            {{rowData[col.field]}}
+                                        </ng-container>
+
+                                        <ng-container *ngIf="col.field === 'acoes' ">
+                                            <div class="column-action flex justify-content-evenly">
+                                                <button pButton type="button"
+                                                        icon="pi pi-trash"
+                                                        class="button-action ui-button-success button-save-new"
+                                                        iconPos="left"
+                                                        pTooltip="Retirar"
+                                                        (click)="retirarDependente(rowData)">
+                                                </button>
+                                            </div>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
                     </div>
                 </p-accordionTab>
             </p-accordion>
@@ -81,6 +116,6 @@
 <div class="action-form">
     <button type="button" pButton icon="pi pi-times" label="Cancelar" (click)="fecharForm()"
             class="button-action ui-button-secondary mr-3"></button>
-    <button type="button" pButton icon="pi pi-check" label="Salvar" (click)="salvarFormulario()"
+    <button type="button" pButton icon="pi pi-check" label="Salvar" (click)="fecharForm()"
             class="button-action button-save-new"></button>
 </div>

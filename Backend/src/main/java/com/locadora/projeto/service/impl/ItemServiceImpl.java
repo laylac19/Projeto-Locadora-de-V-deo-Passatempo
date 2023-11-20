@@ -3,6 +3,7 @@ package com.locadora.projeto.service.impl;
 import com.locadora.projeto.domain.Item;
 import com.locadora.projeto.repository.ItemRepository;
 import com.locadora.projeto.service.ItemService;
+import com.locadora.projeto.service.dto.DropdownDTO;
 import com.locadora.projeto.service.dto.ItemDTO;
 import com.locadora.projeto.service.dto.ItemListDTO;
 import com.locadora.projeto.service.mapper.ItemListMapper;
@@ -48,5 +49,13 @@ public class ItemServiceImpl implements ItemService {
         Item item = findById(id);
         item.setAtivo(false);
         repository.save(item);
+    }
+
+    public List<DropdownDTO> searchDropdownAvailableItems() {
+        return repository.buscarDropdown();
+    }
+
+    public Double buscarValorItem(Integer idItem){
+        return repository.buscarValorItem(idItem);
     }
 }

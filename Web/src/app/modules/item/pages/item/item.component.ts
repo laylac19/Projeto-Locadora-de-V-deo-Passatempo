@@ -4,6 +4,8 @@ import {ItemModel} from "../../../../model/item.model";
 import {ItemService} from "../../../../shared/service/item.service";
 import {SelectItem} from "primeng/api";
 import {TituloService} from "../../../../shared/service/titulo.service";
+import {MensagensProntasEnumModel} from "../../../../shared/util/mensagensProntasEnum.model";
+import {MensagensUtil} from "../../../../shared/util/mensagens-util";
 
 @Component({
     selector: 'app-item',
@@ -28,7 +30,8 @@ export class ItemComponent implements OnInit {
     constructor(
         private builder: FormBuilder,
         private itemService: ItemService,
-        private tituloServie: TituloService
+        private tituloServie: TituloService,
+        private message: MensagensUtil
     ) {
     }
 
@@ -49,7 +52,7 @@ export class ItemComponent implements OnInit {
     }
 
     public dropDownItem(): void {
-        this.itemService.fillItenDropdown().subscribe((data) => {
+        this.itemService.fillTypeCategoryItenDropdown().subscribe((data) => {
             this.tipoItemDropDown = data;
         })
     }
@@ -68,22 +71,23 @@ export class ItemComponent implements OnInit {
         this.novoItem = this.formItem.getRawValue();
         this.itemService.insert(this.novoItem).subscribe({
             next: () => {
+                if (this.novoItem.id) {
+                    this.message.mensagemSucesso(MensagensProntasEnumModel.ATUALIZAR_DIRETOR.descricao);
+                } else {
+                    this.message.mensagemSucesso(MensagensProntasEnumModel.CADASTRO_DIRETOR.descricao);}
                 this.fecharForm();
                 this.listarItens = true;
             },
-            error: (error) => {
-                console.log(error);
-            }
+            error: () => {
+                this.message.mensagemErro(MensagensProntasEnumModel.FALHA_DIRETOR.descricao);            }
         });
     }
 
     public editarItem(id: number): void {
         this.itemService.findById(id).subscribe({
                 next: (response) => {
+                    response.data = new Date(response.data);
                     this.formItem.patchValue(response);
-                },
-                error: (error) => {
-                    console.log(error);
                 },
             }
         );

@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {DiretorModel} from "../../../../model/diretor.model";
 import {DiretorService} from "../../../../shared/service/diretor.service";
+import {MensagensUtil} from "../../../../shared/util/mensagens-util";
+import {MensagensProntasEnumModel} from "../../../../shared/util/mensagensProntasEnum.model";
 
 @Component({
     selector: 'app-diretor',
@@ -21,6 +23,7 @@ export class DiretorComponent implements OnInit {
     constructor(
         private builder: FormBuilder,
         private service: DiretorService,
+        private message: MensagensUtil
     ) {
     }
 
@@ -39,11 +42,15 @@ export class DiretorComponent implements OnInit {
         this.novoDiretor = this.formDiretor.getRawValue();
         this.service.insert(this.novoDiretor).subscribe({
             next: () => {
+                if (this.novoDiretor.id) {
+                    this.message.mensagemSucesso(MensagensProntasEnumModel.ATUALIZAR_DIRETOR.descricao);
+                } else {
+                    this.message.mensagemSucesso(MensagensProntasEnumModel.CADASTRO_DIRETOR.descricao);}
                 this.fecharForm();
                 this.listarDiretores = true;
             },
-            error: (error) => {
-                console.log(error);
+            error: () => {
+                this.message.mensagemErro(MensagensProntasEnumModel.FALHA_DIRETOR.descricao);
             }
         });
     }
@@ -52,9 +59,6 @@ export class DiretorComponent implements OnInit {
         this.service.findById(id).subscribe({
                 next: (response) => {
                     this.formDiretor.patchValue(response);
-                },
-                error: (error) => {
-                    console.log(error);
                 },
             }
         );

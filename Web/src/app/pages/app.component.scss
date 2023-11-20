@@ -18,3 +18,13 @@ div.conteudo-principal {
 .conteudo-principal > * {
     flex: 1;
 }
+
+div.container.list {
+    height: 100%;
+    display: flex;
+    align-items: start;
+    background-color: var(--cor-tema-eton-blue);
+    padding: 0 5px 0 5px;
+    border-bottom: 4px dashed var(--cor-tema-bittersweet);
+    justify-content: center;
+}

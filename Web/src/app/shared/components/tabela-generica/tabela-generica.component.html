@@ -1,0 +1,77 @@
+<div class="item-pagina tabela">
+    <p-table [columns]="colunas"
+             [value]="dados"
+             [paginator]="paginator"
+             [rows]="rows"
+             [responsive]="true"
+             sortMode="multiple">
+        <ng-template pTemplate="header" let-colunas>
+            <tr>
+                <th id="titulo-colunas" *ngFor="let col of colunas" [pSortableColumn]="col.field"
+                    [style]="'width:'+ col.width">
+                    {{col.header}}
+                    <ng-container>
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </ng-container>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-colunas="columns">
+            <tr>
+                <td *ngFor="let col of colunas">
+                    <ng-container *ngIf="!campoDatanascimento(col.field) &&
+                                        !campoNumeroSerie(col.field) &&
+                                        !campoPrazoDevolucao(col.field) &&
+                                        !campoDataItem(col.field) &&
+                                        !campoValor(col.field)">
+                        {{rowData[col.field]}}
+                    </ng-container>
+                    <ng-container *ngIf="campoDatanascimento(col.field)">
+                        <div class="flex icone w100">
+                            {{rowData[col.field] | date: "dd/MM/yyyy"}}
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="campoDataItem(col.field)">
+                        <div class="flex icone w100">
+                            {{rowData[col.field] | date: "dd/MM/yyyy"}}
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="campoValor(col.field)">
+                        <div class="flex icone w100">
+                            {{rowData[col.field]  | currency:'BRL':'symbol' }}
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="campoPrazoDevolucao(col.field)">
+                        {{rowData[col.field] + ' dia(s)'}}
+                    </ng-container>
+                    <ng-container *ngIf="campoNumeroSerie(col.field)">
+                        {{'IFL-' + rowData[col.field]}}
+                    </ng-container>
+                    <ng-container *ngIf="col.field === 'acoes' ">
+                        <div class="flex justify-content-center p-0">
+                            <button *ngIf="visualizarDado"
+                                    pButton
+                                    icon="pi pi-eye"
+                                    class="button-action botao-secundario button-view sem-fundo flex align-items-center justify-content-center m-1"
+                                    iconPos="left"
+                                    (click)="this.abrirModalVisualizar.emit(rowData.id)">
+                            </button>
+                            <button *ngIf="editarDado" pButton
+                                    icon="pi pi-pencil"
+                                    class="button-action botao-secundario button-view sem-fundo flex align-items-center justify-content-center m-1"
+                                    iconPos="left"
+                                    (click)="this.abrirModalHabilitado.emit(rowData.id)">
+                            </button>
+                            <button *ngIf="desativarDado"
+                                    pButton
+                                    icon="pi pi-trash"
+                                    class="button-action botao-secundario button-view sem-fundo flex align-items-center justify-content-center m-1"
+                                    (click)="this.deletarDado.emit(rowData.id)">
+                            </button>
+                        </div>
+                    </ng-container>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

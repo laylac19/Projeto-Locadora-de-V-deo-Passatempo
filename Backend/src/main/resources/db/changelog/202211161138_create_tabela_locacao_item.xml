@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="1668609543506-1" author="layla">
+        <createTable tableName="locacao_item">
+            <column name="locacao_id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_locacao_item"/>
+            </column>
+            <column name="item_id" type="INT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_locacao_item"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="item_id" baseTableName="locacao_item" constraintName="FK_LOCACAO_ITEM_ON_ITEM" referencedColumnNames="id" referencedTableName="item"/>
+        <addForeignKeyConstraint baseColumnNames="locacao_id" baseTableName="locacao_item" constraintName="FK_LOCACAO_ITEM_ON_LOCACAO" referencedColumnNames="id" referencedTableName="locacao"/>
+    </changeSet>
+</databaseChangeLog>

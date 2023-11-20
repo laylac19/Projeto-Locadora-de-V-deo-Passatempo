@@ -4,9 +4,9 @@ import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
 
 import {SelectItem} from "primeng/api";
-import {ClienteListModel} from "../../model/cliente-list.model";
+import {ClienteListModel} from "../../model/list/cliente-list.model";
 import {ClienteModel} from "../../model/cliente.model";
-import {SocioListModel} from "../../model/socio-list.model";
+import {SocioListModel} from "../../model/list/socio-list.model";
 import {VinculoEntidades} from "../../model/vinculo-entidade.model";
 import {SocioModel} from "../../model/socio.model";
 
@@ -36,12 +36,24 @@ export class ClienteService {
         return this.http.get<ClienteModel>(this.resourceUrl + '/' + id);
     }
 
-    saveDependent(vinculo: VinculoEntidades): Observable<ClienteModel> {
-        return this.http.post<ClienteModel>(this.resourceUrl + '/salvar-dependente', vinculo);
+    findDependentsOfPartner(idSocio: number):  Observable<SelectItem[]> {
+        return this.http.get<SelectItem[]>(this.resourceUrl + '/dependentes-socio/' + idSocio);
+    }
+
+    fillClientsDropDown(): Observable<SelectItem[]> {
+        return this.http.get<SelectItem[]>(this.resourceUrl + '/dropdown')
     }
 
     fillNonPartnersCustomersDropdown(): Observable<SelectItem[]>{
         return this.http.get<SelectItem[]>(this.resourceUrl + '/clientes/dropdown')
+    }
+
+    fillDropDownLease(): Observable<SelectItem[]>{
+        return this.http.get<SelectItem[]>(this.resourceUrl + '/dropdown/locacao')
+    }
+
+    insertDependent(vinculo: VinculoEntidades): Observable<ClienteModel> {
+        return this.http.post<ClienteModel>(this.resourceUrl + '/salvar-dependente', vinculo);
     }
 
     insert(entity: ClienteModel): Observable<ClienteModel> {

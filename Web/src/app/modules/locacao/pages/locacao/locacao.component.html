@@ -1,0 +1,108 @@
+<div class="form p-fluid">
+    <form [formGroup]="formLocacao" class="ui-fluid">
+        <div class="area flex">
+            <div class="field col-8">
+            <span class="item">
+                <label class="campo-form">Cliente</label>
+                <p-dropdown formControlName="idCliente" [filter]="true" [options]="clientesDropDown"
+                            placeholder="Selecione"
+                            appendTo="body">
+                    <ng-template let-item pTemplate="item">
+                        <div class="ui-helper-clearfix div-itens">
+                            <div class="place-drop">{{item.label}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </span>
+            </div>
+            <div class="field col-4">
+                <span class="item">
+                    <label class="campo-form" for="inputData">Data Aquisição</label>
+                    <p-calendar
+                        class="calendario"
+                        id="inputData"
+                        formControlName="dtLocacao"
+                        dateFormat="dd/mm/yy"
+                        appendTo="body"
+                        [yearNavigator]="true"
+                        [defaultDate]="dtLocacao"
+                        [placeholder]="setDataAtual(dtLocacao)"
+                        [showIcon]="true">
+                    </p-calendar>
+                </span>
+            </div>
+        </div>
+        <div class="area-acordion flex col-12">
+            <div class="field col-8">
+            <span class="item">
+                <label class="campo-form">Título Item</label>
+                <p-dropdown formControlName="idItem" [filter]="true" [options]="itensDropdown"
+                            placeholder="Selecione o Título do Item"
+                            appendTo="body">
+                   <ng-template let-item pTemplate="item">
+                       <div class="ui-helper-clearfix div-itens">
+                           <div class="place-drop">{{item.label}}</div>
+                       </div>
+                   </ng-template>
+               </p-dropdown>
+            </span>
+            </div>
+            <div class="field button col-4">
+                <button type="button" pButton icon="bi bi-check-circle" label="Confirmar"
+                        (click)="confirmarLocacaoItem()"
+                        class="button-action ui-button-secondary mr-3">
+                </button>
+            </div>
+        </div>
+        <div class="detalhe"></div>
+        <div class="area flex readonly pb-5">
+            <div class="field-acordion col-3">
+                <label class="campo-form" for="inputDataPrevista">Data Devolução Prevista</label>
+                <p-calendar
+                    class="calendario"
+                    id="inputDataPrevista"
+                    formControlName="dtLocacao"
+                    dateFormat="dd/mm/yy"
+                    appendTo="body"
+                    [disabled]="true"
+                    [yearNavigator]="true"
+                    [defaultDate]="dtDevolucaoPrevista"
+                    [showIcon]="true">
+                </p-calendar>
+            </div>
+            <div class="field-acordion col-3">
+                <label class="campo-form">Valor R$</label>
+                <p-inputNumber formControlName="valorCobrado" mode="currency" locale="pt-BR" currency="BRL" [min]="0"
+                               [showButtons]="true" [step]="5" [disabled]="true"></p-inputNumber>
+            </div>
+            <div class="area flex readonly justify-content-between" *ngIf="depoisSalvar">
+                <div class="field-acordion col-3">
+                    <label class="campo-form" for="inputDataDevolucao">Data Devolução Prevista</label>
+                    <p-calendar
+                        [readonlyInput]="true"
+                        class="calendario"
+                        id="inputDataDevolucao"
+                        formControlName="dtLocacao"
+                        dateFormat="dd/mm/yy"
+                        appendTo="body"
+                        [disabled]="true"
+                        [yearNavigator]="true"
+                        [defaultDate]="dtDevolucaoEfetiva"
+                        [showIcon]="true">
+                    </p-calendar>
+                </div>
+                <div class="field-acordion col-3">
+                    <label class="campo-form">Multa Cobrada R$</label>
+                    <p-inputNumber formControlName="multaCobrada" mode="currency" locale="pt-BR" currency="BRL"
+                                   [disabled]="true" [min]="0" [showButtons]="true" [step]="5"></p-inputNumber>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="action-form">
+    <button type="button" pButton icon="pi pi-times" label="Cancelar" (click)="fecharForm()"
+            class="button-action ui-button-secondary mr-3"></button>
+    <button type="button" pButton icon="pi pi-check" label="Salvar" (click)="fecharForm()"
+            class="button-action button-save-new"></button>
+</div>

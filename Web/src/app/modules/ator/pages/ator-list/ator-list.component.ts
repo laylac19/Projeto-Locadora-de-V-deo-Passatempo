@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AtorModel} from "../../../../model/ator.model";
 import {AtorComponent} from "../ator/ator.component";
-import {TituloModalEnum} from "../../../../model/util/titulo-modal-enum.model";
-import {AtorListModel} from "../../../../model/ator-list.model";
+import {TituloModalEnum} from "../../../../shared/util/titulo-modal-enum.model";
+import {AtorListModel} from "../../../../model/list/ator-list.model";
 import {AtorService} from "../../../../shared/service/ator.service";
 import {EntidadeUtil} from "../../../../shared/util/entidade-util";
-import {ConfirmationService} from "primeng/api";
-import {ColunaModel} from "../../../../model/util/coluna.model";
+import {ColunaModel} from "../../../../shared/util/coluna.model";
+import {MensagensConfirmacao} from "../../../../shared/util/msgConfirmacaoDialog.util";
 
 @Component({
     selector: 'app-ator-list',
@@ -26,7 +26,7 @@ export class AtorListComponent implements OnInit {
 
     constructor(
         private atorService: AtorService,
-        private confirmMessage: ConfirmationService
+        private confirmMessage: MensagensConfirmacao,
     ) {
     }
 
@@ -67,17 +67,7 @@ export class AtorListComponent implements OnInit {
     }
 
     public confirmarAcao(id: number): void {
-        this.confirmarDialog(id, () => this.desativarAtor(id), EntidadeUtil.ATOR);
-    }
-
-    public confirmarDialog(id: number, alterarSituacao: () => void, entidade: EntidadeUtil): void {
-        this.confirmMessage.confirm({
-            header: 'Confirmação',
-            message: 'Deseja desativar esse(a) ' + entidade.descricao + ' ?',
-            acceptLabel: 'Sim',
-            rejectLabel: 'Cancelar',
-            accept: alterarSituacao
-        });
+        this.confirmMessage.confirmarDialog(id, () => this.desativarAtor(id), EntidadeUtil.ATOR);
     }
 
     public resetarForm(): void {

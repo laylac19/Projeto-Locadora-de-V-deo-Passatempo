@@ -1,10 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {TituloModalEnum} from "../../../../model/util/titulo-modal-enum.model";
+import {TituloModalEnum} from "../../../../shared/util/titulo-modal-enum.model";
 import {ClienteFormComponent} from "../cliente-form/cliente-form.component";
 import {ClienteModel} from "../../../../model/cliente.model";
-import {ColunaModel} from "../../../../model/util/coluna.model";
-import {ClienteListModel} from "../../../../model/cliente-list.model";
+import {ColunaModel} from "../../../../shared/util/coluna.model";
+import {ClienteListModel} from "../../../../model/list/cliente-list.model";
 import {ClienteService} from "../../../../shared/service/cliente.service";
+import {MensagensConfirmacao} from "../../../../shared/util/msgConfirmacaoDialog.util";
+import {EntidadeUtil} from "../../../../shared/util/entidade-util";
 
 @Component({
     selector: 'app-cliente-list',
@@ -16,18 +18,18 @@ export class ClienteListComponent implements OnInit {
     public tituloModal: string;
     public status: boolean;
     public clienteAtivo: boolean;
+    public abaSelecionada: boolean;
 
     public cliente: ClienteModel;
-    public listaClienteAtivos: ClienteListModel[] = [];
+    public listaClientes: ClienteListModel[] = [];
     public colunas: ColunaModel[] = [];
 
     @Input() display = false;
     @ViewChild(ClienteFormComponent) formCliente: ClienteFormComponent;
-    abaSelecionada: boolean;
-
 
     constructor(
         private clienteService: ClienteService,
+        private confirmMessage: MensagensConfirmacao,
     ) {
     }
 
@@ -55,7 +57,7 @@ export class ClienteListComponent implements OnInit {
 
     public listarTodosClientesAtivos(): void {
         this.clienteService.findAllActive().subscribe((data) => {
-            this.listaClienteAtivos = data;
+            this.listaClientes = data;
         })
     }
 
@@ -77,6 +79,10 @@ export class ClienteListComponent implements OnInit {
         this.formCliente.visualizarCliente(id);
     }
 
+    public confirmarAcao(id: number): void {
+        this.confirmMessage.confirmarDialog(id, () => this.desativarCliente(id), EntidadeUtil.CLIENTE);
+    }
+
     public desativarCliente(id: number): void {
         this.clienteService.delete(id).subscribe(() => {
             this.listarTodosClientesAtivos();
@@ -94,4 +100,7 @@ export class ClienteListComponent implements OnInit {
         this.display = false;
     }
 
+    public configurarListagem(status: boolean): boolean {
+       return status ? this.clienteAtivo : this.clienteAtivo = false;
+    }
 }

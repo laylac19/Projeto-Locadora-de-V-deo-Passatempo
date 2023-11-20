@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ClienteModel} from "../../../../model/cliente.model";
 import {ClienteService} from "../../../../shared/service/cliente.service";
 import {SelectItem} from "primeng/api";
+import {MensagensUtil} from "../../../../shared/util/mensagens-util";
+import {MensagensProntasEnumModel} from "../../../../shared/util/mensagensProntasEnum.model";
 
 @Component({
     selector: 'app-cliente-form',
@@ -27,7 +29,8 @@ export class ClienteFormComponent implements OnInit {
 
     constructor(
         private builder: FormBuilder,
-        private clienteService: ClienteService
+        private clienteService: ClienteService,
+        private message: MensagensUtil
     ) {
     }
 
@@ -58,11 +61,15 @@ export class ClienteFormComponent implements OnInit {
         this.novoCliente = this.formCliente.getRawValue();
         this.clienteService.insert(this.novoCliente).subscribe({
             next: () => {
+                if (this.novoCliente.id) {
+                    this.message.mensagemSucesso(MensagensProntasEnumModel.ATUALIZAR_CLIENTE.descricao);
+                } else {
+                    this.message.mensagemSucesso(MensagensProntasEnumModel.CADASTRO_CLIENTE.descricao);}
                 this.fecharForm();
                 this.listarClientes = true;
             },
-            error: (error) => {
-                console.log(error);
+            error: () => {
+                this.message.mensagemErro(MensagensProntasEnumModel.FALHA_CLIENTE.descricao);
             }
         })
     }
@@ -71,11 +78,9 @@ export class ClienteFormComponent implements OnInit {
         this.clienteService.findById(id).subscribe({
                 next: (response) => {
                     !this.novoDado;
+                    response.dataNascimento = new Date(response.dataNascimento);
                     this.numInsc = response.numeroInscricao;
                     this.formCliente.patchValue(response);
-                },
-                error: (error) => {
-                    console.log(error);
                 },
             }
         );
@@ -85,12 +90,11 @@ export class ClienteFormComponent implements OnInit {
         this.clienteService.findById(id).subscribe({
                 next: (response) => {
                     !this.novoDado;
+                    response.dataNascimento = new Date(response.dataNascimento);
                     this.numInsc = response.numeroInscricao;
                     this.formCliente.patchValue(response);
                     this.abilitarBotao = true;
-                },
-                error: (error) => {
-                    console.log(error);
+                    this.formCliente.disable();
                 },
             }
         );
@@ -99,6 +103,7 @@ export class ClienteFormComponent implements OnInit {
     public fecharForm(): void {
         this.numInsc = '';
         this.formCliente.reset();
+        this.formCliente.enable();
         this.resForm.emit();
     }
 }
